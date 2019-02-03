@@ -3,8 +3,18 @@ import { connect } from 'react-redux';
 import { fetchBlog } from '../../actions';
 
 class BlogShow extends Component {
+
+
+
   componentDidMount() {
     this.props.fetchBlog(this.props.match.params._id);
+  }
+
+  renderImage(imageUrl) {
+    const imageBaseUrl = 'https://s3-us-west-2.amazonaws.com/my-bucket1234';
+    if (imageUrl !== undefined) {
+      return <img src={`${imageBaseUrl}/${imageUrl}`} alt='blog image' />
+    }
   }
 
   render() {
@@ -12,12 +22,13 @@ class BlogShow extends Component {
       return '';
     }
 
-    const { title, content } = this.props.blog;
+    const { title, content, imageUrl } = this.props.blog;
 
     return (
       <div>
         <h3>{title}</h3>
         <p>{content}</p>
+        {this.renderImage(imageUrl)}
       </div>
     );
   }
